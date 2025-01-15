@@ -29,11 +29,17 @@ public class UserControll {
                 System.out.println("Invalid pin, it must be a 4 digits: ");
                  return;
             }
-           int randomNumer = (int)(Math.random()*100000);
-            String salaryAccount = "Salary Account " + randomNumer;
-            String savingsAccount = "Savings Account " + randomNumer;
+           int randomNumber = (int)(Math.random()*100000);
+            int randomNumber2 = (int)(Math.random()*100000);
+            String salaryAccount = "Salary Account " + randomNumber;
+            String savingsAccount = "Savings Account " + randomNumber2;
 
-            
+            User user = new User(personalID, pin, salaryAccount, savingsAccount);
+            users.put(personalID, user);
+
+            System.out.println("User created successfully!");
+            System.out.println("Salary Account: " + salaryAccount);
+            System.out.println("Savings Account: " + savingsAccount);
 
 
         }catch (Exception e) {
@@ -41,7 +47,34 @@ public class UserControll {
         }
 
     }
-    public void login() {
 
+
+    public void login() {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter your personal ID: ");
+            String personalId = scanner.nextLine();
+
+            if (!users.containsKey(personalId)) {
+                System.out.println("User not found.");
+                return;
+            }
+
+            System.out.print("Enter your PIN: ");
+            String pin = scanner.nextLine();
+
+            User user = users.get(personalId);
+
+            if (user.getPin().equals(pin)) {
+                System.out.println("Login successful!");
+            } else {
+                System.out.println("Invalid PIN.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("An error occurred during login. Please try again.");
+        }
     }
+
 }
